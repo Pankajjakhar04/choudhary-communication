@@ -7,7 +7,7 @@ import AuthContext from '../context/AuthContext'
 import toast from 'react-hot-toast'
 
 export default function AdminLogin(){
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
