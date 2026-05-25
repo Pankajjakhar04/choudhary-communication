@@ -17,6 +17,8 @@
     { "source": "/api/offers/:id",    "destination": "/api/offers/[id]" },
     { "source": "/api/services",      "destination": "/api/services/index" },
     { "source": "/api/services/:id",  "destination": "/api/services/[id]" },
+    { "source": "/api/groups",        "destination": "/api/groups/index" },
+    { "source": "/api/groups/:id",    "destination": "/api/groups/[id]" },
     { "source": "/api/settings",      "destination": "/api/settings/index" },
     { "source": "/(.*)",              "destination": "/index.html" }
   ]

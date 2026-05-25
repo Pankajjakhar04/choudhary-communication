@@ -43,6 +43,12 @@ export const addService    = (data)     => instance.post('/services', data)
 export const updateService = (id, data) => instance.put(`/services/${id}`, data)
 export const deleteService = (id)       => instance.delete(`/services/${id}`)
 
+// Groups
+export const getGroups    = ()     => instance.get('/groups')
+export const addGroup     = (data) => instance.post('/groups', data)
+export const updateGroup  = (id, data) => instance.put(`/groups/${id}`, data)
+export const deleteGroup  = (id)       => instance.delete(`/groups/${id}`)
+
 // Settings
 export const getSettings    = ()     => instance.get('/settings')
 export const updateSettings = (data) => instance.put('/settings', data)

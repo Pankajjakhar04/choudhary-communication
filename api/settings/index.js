@@ -49,11 +49,11 @@ export default async function handler(req, res) {
         try { body = JSON.parse(body); } catch { body = {}; }
       }
 
-      // Only allow updating specific fields
       const allowed = [
         'shopName', 'shopNameHindi', 'whatsapp', 'phone',
         'address', 'addressHindi', 'googleMapsLink',
         'shopTimings', 'shopTimingsHindi',
+        'announcementText', 'announcementTextHindi', 'showAnnouncement'
       ];
       const updateData = {};
       for (const key of allowed) {

@@ -5,15 +5,16 @@ import AdminItems from './AdminItems'
 import AdminOffers from './AdminOffers'
 import AdminServices from './AdminServices'
 import AdminSettings from './AdminSettings'
+import AdminCustomers from './AdminCustomers'
 
-const TABS = ['items', 'offers', 'services', 'settings']
+const TABS = ['items', 'offers', 'services', 'customers', 'settings']
 
 export default function AdminDashboard() {
   const { t, toggleLang, lang } = useLang()
   const { logout } = useContext(AuthContext)
   const [tab, setTab] = useState('items')
-  const [stats, setStats] = useState({ items: 0, offers: 0, services: 0 })
-  const [createSignals, setCreateSignals] = useState({ items: 0, offers: 0, services: 0 })
+  const [stats, setStats] = useState({ items: 0, offers: 0, services: 0, customers: 0 })
+  const [createSignals, setCreateSignals] = useState({ items: 0, offers: 0, services: 0, customers: 0 })
 
   const handleChanged = useCallback((section, count) => {
     setStats(prev => ({ ...prev, [section]: typeof count === 'number' ? count : prev[section] }))
@@ -31,6 +32,7 @@ export default function AdminDashboard() {
       case 'items':    return t('manageItems')
       case 'offers':   return t('manageOffers')
       case 'services': return t('manageServices')
+      case 'customers': return '👥 Customers'
       case 'settings': return '⚙️ Settings'
       default: return key
     }
@@ -41,6 +43,7 @@ export default function AdminDashboard() {
       case 'items':    return '📦'
       case 'offers':   return '🏷️'
       case 'services': return '🔧'
+      case 'customers': return '👥'
       case 'settings': return '⚙️'
       default: return '📋'
     }
@@ -51,11 +54,12 @@ export default function AdminDashboard() {
       case 'items':    return t('totalItems')
       case 'offers':   return t('activeOffers')
       case 'services': return t('totalServices')
+      case 'customers': return 'WhatsApp Groups'
       default: return key
     }
   }
 
-  const STAT_TABS = ['items', 'offers', 'services']
+  const STAT_TABS = ['items', 'offers', 'services', 'customers']
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -82,7 +86,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-5xl mx-auto px-4 py-4">
         {/* Stats cards — click to switch tab */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
           {STAT_TABS.map(key => (
             <button
               key={key}
@@ -124,6 +128,12 @@ export default function AdminDashboard() {
             >
               <span>🔧</span> {t('addService')}
             </button>
+            <button
+              onClick={() => triggerCreate('customers')}
+              className="flex items-center gap-1.5 bg-white border rounded-lg px-3 py-2 text-sm shadow-sm hover:shadow-md transition-shadow"
+            >
+              <span>👥</span> Add Group
+            </button>
           </div>
         </div>
 
@@ -161,6 +171,12 @@ export default function AdminDashboard() {
           <AdminServices
             onChanged={(count) => handleChanged('services', count)}
             createSignal={createSignals.services}
+          />
+        </div>
+        <div style={{ display: tab === 'customers' ? 'block' : 'none' }}>
+          <AdminCustomers
+            onChanged={(count) => handleChanged('customers', count)}
+            createSignal={createSignals.customers}
           />
         </div>
         <div style={{ display: tab === 'settings' ? 'block' : 'none' }}>
