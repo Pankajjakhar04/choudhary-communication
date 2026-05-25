@@ -15,6 +15,7 @@ export default function AdminOffers({ onChanged, createSignal }) {
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(null)
   const [toggling, setToggling] = useState(null)
+  const [viewImage, setViewImage] = useState(null)
 
   const toggleActive = async (offer) => {
     setToggling(offer._id)
@@ -185,7 +186,12 @@ export default function AdminOffers({ onChanged, createSignal }) {
                   <tr key={o._id} className="border-b last:border-0">
                     <td className="py-3 pr-4">
                       {o.imageUrl ? (
-                        <img src={o.imageUrl} alt={o.title} className="w-12 h-12 rounded object-cover" />
+                        <img 
+                          src={o.imageUrl} 
+                          alt={o.title} 
+                          className="w-12 h-12 rounded object-cover cursor-pointer hover:opacity-80 transition-opacity" 
+                          onClick={() => setViewImage(o.imageUrl)}
+                        />
                       ) : (
                         <span className="inline-block w-3 h-3 rounded-full" style={{ background: o.bgColor || '#7C3AED' }} />
                       )}
@@ -237,7 +243,12 @@ export default function AdminOffers({ onChanged, createSignal }) {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-2 min-w-0">
                     {o.imageUrl ? (
-                      <img src={o.imageUrl} alt={o.title} className="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
+                      <img 
+                        src={o.imageUrl} 
+                        alt={o.title} 
+                        className="w-14 h-14 rounded-lg object-cover flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity" 
+                        onClick={() => setViewImage(o.imageUrl)}
+                      />
                     ) : (
                       <span className="inline-block w-3 h-3 rounded-full mt-1.5 flex-shrink-0" style={{ background: o.bgColor || '#7C3AED' }} />
                     )}
@@ -366,6 +377,29 @@ export default function AdminOffers({ onChanged, createSignal }) {
         onConfirm={() => onDelete(confirm.id)}
         onCancel={() => setConfirm({ open: false, id: null })}
       />
+
+      {/* Image Modal */}
+      {viewImage && (
+        <div 
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setViewImage(null)}
+        >
+          <div className="relative max-w-4xl w-full max-h-screen flex flex-col items-center justify-center animate-fade-in" style={{ position: 'fixed' }}>
+            <button 
+              className="absolute -top-12 right-0 md:-right-8 text-white hover:text-gray-300 text-4xl font-light p-2"
+              onClick={() => setViewImage(null)}
+            >
+              &times;
+            </button>
+            <img 
+              src={viewImage} 
+              alt="Preview" 
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

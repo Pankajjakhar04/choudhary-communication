@@ -328,6 +328,66 @@ export default function AdminSettings() {
         </div>
       </div>
 
+      {/* Announcement section */}
+      <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+        <div className="px-4 py-3 bg-gray-50 border-b flex items-center gap-2">
+          <span className="text-lg">📢</span>
+          <h3 className="font-semibold text-sm text-dark">Store Announcement</h3>
+        </div>
+        <div className="p-4 space-y-4">
+          <div className="flex items-center gap-3 bg-blue-50 p-3 rounded-lg border border-blue-100">
+            <input 
+              type="checkbox" 
+              id="show-announcement"
+              checked={form.showAnnouncement || false}
+              onChange={e => onChange('showAnnouncement', e.target.checked)}
+              className="w-5 h-5 rounded text-primary focus:ring-primary cursor-pointer"
+            />
+            <label htmlFor="show-announcement" className="text-sm font-medium text-blue-900 cursor-pointer select-none">
+              Enable Announcement Banner on Homepage
+            </label>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Announcement Text (English)
+            </label>
+            <textarea
+              value={form.announcementText || ''}
+              onChange={e => onChange('announcementText', e.target.value)}
+              placeholder="e.g., 🎉 Diwali Mega Sale! Get 20% off on all accessories."
+              className="border rounded-lg w-full px-3 py-2.5 text-base bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow outline-none"
+              rows={2}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Announcement Text (Hindi)
+            </label>
+            <textarea
+              value={form.announcementTextHindi || ''}
+              onChange={e => onChange('announcementTextHindi', e.target.value)}
+              placeholder="e.g., 🎉 दिवाली महा सेल! सभी एक्सेसरीज पर 20% की छूट पाएं।"
+              className="border rounded-lg w-full px-3 py-2.5 text-base bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow outline-none"
+              rows={2}
+            />
+            <p className="text-xs text-muted mt-1">If left blank, the English text will be auto-translated for Hindi users.</p>
+          </div>
+
+          {/* Live Preview */}
+          {form.showAnnouncement && (form.announcementText || form.announcementTextHindi) && (
+            <div className="mt-4 border rounded-xl overflow-hidden">
+              <div className="bg-gray-100 text-xs text-center py-1 font-medium text-gray-500 uppercase tracking-wider">Live Preview</div>
+              <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-3 text-center text-sm font-medium shadow-inner flex items-center justify-center gap-2">
+                <span className="text-xl">📢</span>
+                <span>{form.announcementText || form.announcementTextHindi}</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Save button */}
       <div className="flex items-center justify-between bg-white rounded-xl shadow-sm border p-4">
         <div className="text-sm text-muted">

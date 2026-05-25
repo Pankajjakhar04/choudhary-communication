@@ -16,6 +16,7 @@ export default function AdminItems({ onChanged, createSignal }) {
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(null)
   const [toggling, setToggling] = useState(null)
+  const [viewImage, setViewImage] = useState(null)
 
   const toggleActive = async (item) => {
     const newVal = !item.isAvailable
@@ -225,7 +226,8 @@ export default function AdminItems({ onChanged, createSignal }) {
                       <img
                         src={item.imageUrl}
                         alt={item.name}
-                        className="w-12 h-12 rounded object-cover"
+                        className="w-12 h-12 rounded object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => setViewImage(item.imageUrl)}
                       />
                     </td>
                     <td>
@@ -281,7 +283,8 @@ export default function AdminItems({ onChanged, createSignal }) {
                   <img
                     src={item.imageUrl}
                     alt={item.name}
-                    className="w-16 h-16 rounded object-cover flex-shrink-0"
+                    className="w-16 h-16 rounded object-cover flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                    onClick={() => setViewImage(item.imageUrl)}
                   />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium truncate">{item.name}</div>
@@ -469,6 +472,29 @@ export default function AdminItems({ onChanged, createSignal }) {
         onConfirm={() => onDelete(confirm.id)}
         onCancel={() => setConfirm({ open: false, id: null })}
       />
+
+      {/* Image Modal */}
+      {viewImage && (
+        <div 
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setViewImage(null)}
+        >
+          <div className="relative max-w-4xl w-full max-h-screen flex flex-col items-center justify-center animate-fade-in" style={{ position: 'fixed' }}>
+            <button 
+              className="absolute -top-12 right-0 md:-right-8 text-white hover:text-gray-300 text-4xl font-light p-2"
+              onClick={() => setViewImage(null)}
+            >
+              &times;
+            </button>
+            <img 
+              src={viewImage} 
+              alt="Preview" 
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -6,6 +6,7 @@ import SkeletonCard from '../components/SkeletonCard'
 import OfferBanner from '../components/OfferBanner'
 import ServiceCard from '../components/ServiceCard'
 import { useLang } from '../context/LanguageContext'
+import { useAutoTranslate } from '../hooks/useAutoTranslate'
 import { whatsappLink } from '../utils/helpers'
 
 /* ─── Splash / Welcome Screen ─── */
@@ -98,6 +99,11 @@ export default function CustomerHome() {
   const mapsLink = settings?.googleMapsLink || ''
   const timings = (lang === 'hi' && settings?.shopTimingsHindi) || settings?.shopTimings || ''
 
+  const rawAnnouncement = settings?.announcementText || ''
+  const rawAnnouncementHi = settings?.announcementTextHindi || ''
+  const announcementText = useAutoTranslate(rawAnnouncement, rawAnnouncementHi)
+  const showAnnouncement = settings?.showAnnouncement && announcementText
+
   const whatsappHref = whatsappLink(whatsappNumber)
   const callHref = phoneNumber ? `tel:${phoneNumber}` : ''
   const displayNumber = (value) => value || ''
@@ -112,6 +118,14 @@ export default function CustomerHome() {
       )}
 
       <Navbar shopName={shopName} />
+      
+      {showAnnouncement && (
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-3 text-center text-sm sm:text-base font-medium shadow-md">
+          <span className="text-lg mr-2 inline-block animate-bounce">📢</span>
+          {announcementText}
+        </div>
+      )}
+
       <main className="max-w-5xl mx-auto p-4">
         <section className="bg-gradient-to-r from-primary/90 to-blue-400 text-white rounded-xl p-6 mb-6">
           <h1 className="text-2xl font-semibold">{t('welcome')}</h1>
