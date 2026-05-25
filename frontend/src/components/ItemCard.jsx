@@ -70,7 +70,7 @@ export default function ItemCard({ item, whatsappNumber }) {
             className="block text-center text-sm bg-primary text-white rounded-lg px-3 py-2.5 font-medium hover:bg-blue-700 active:bg-blue-800 transition-colors"
             href={waHref || '#'}
           >
-            💬 {t('viewDetails')}
+            💬 {t('whatsappUs')}
           </a>
         </div>
       </div>
