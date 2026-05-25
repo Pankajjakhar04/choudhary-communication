@@ -206,13 +206,16 @@ export default function AdminCustomers({ onChanged, createSignal }) {
     const address = msgLang === 'hi' 
       ? (settings.addressHindi || settings.address || '') 
       : (settings.address || '')
+    const website = settings.websiteUrl || 'https://choudhary-communication.vercel.app'
     
     let footer = '\n\n'
     if (msgLang === 'hi') {
+      if (website) footer += `🌐 *अधिक जानकारी के लिए:* ${website}\n`
       if (address) footer += `📍 *हमारा पता:* ${address}\n`
       if (phone) footer += `📞 *संपर्क करें:* ${phone}\n`
       footer += `- चौधरी कम्युनिकेशंस`
     } else {
+      if (website) footer += `🌐 *For more info, visit:* ${website}\n`
       if (address) footer += `📍 *Our Address:* ${address}\n`
       if (phone) footer += `📞 *Contact Us:* ${phone}\n`
       footer += `- Choudhary Communications`

@@ -136,6 +136,7 @@ const TEXT_SECTIONS = [
   { section: 'Contact', icon: '📞', fields: [
     { key: 'whatsapp',      label: 'WhatsApp Number',      placeholder: '917891753753', hint: 'Country code + number, no spaces' },
     { key: 'phone',          label: 'Phone Number',         placeholder: '7891753753' },
+    { key: 'websiteUrl',     label: 'Website URL',          placeholder: 'https://choudhary-communication.vercel.app' },
   ]},
   { section: 'Location', icon: '📍', fields: [
     { key: 'address',       label: 'Address (English)',     placeholder: 'Near City Center, Main Road, Jaipur' },
