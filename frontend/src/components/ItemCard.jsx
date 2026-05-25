@@ -6,6 +6,7 @@ import { formatPrice, whatsappLink } from '../utils/helpers'
 export default function ItemCard({ item, whatsappNumber }) {
   const { lang, t } = useLang()
   const [expanded, setExpanded] = useState(false)
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false)
 
   const name = useAutoTranslate(item.name, item.nameHindi)
   const desc = useAutoTranslate(item.description, item.descriptionHindi)
@@ -23,7 +24,8 @@ export default function ItemCard({ item, whatsappNumber }) {
           loading="lazy"
           src={item.imageUrl}
           alt={name}
-          className="w-full aspect-[4/3] object-cover"
+          className="w-full aspect-[4/3] object-cover cursor-pointer hover:opacity-90 transition-opacity"
+          onClick={() => setIsImageModalOpen(true)}
         />
         {/* Stock badge overlay */}
         <span
@@ -74,6 +76,29 @@ export default function ItemCard({ item, whatsappNumber }) {
           </a>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {isImageModalOpen && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setIsImageModalOpen(false)}
+        >
+          <div className="relative max-w-4xl w-full max-h-screen flex flex-col items-center justify-center animate-fade-in">
+            <button 
+              className="absolute -top-12 right-0 md:-right-8 text-white hover:text-gray-300 text-4xl font-light p-2"
+              onClick={() => setIsImageModalOpen(false)}
+            >
+              &times;
+            </button>
+            <img 
+              src={item.imageUrl} 
+              alt={name} 
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
